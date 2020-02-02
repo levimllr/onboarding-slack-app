@@ -1,5 +1,12 @@
+# Where we'll handle the OAuth authentication flow.
+# In order to access a team's events and data, we need to ask the user 
+# for permission to install the app on their Team and to grant our bot user access.
+
 require 'sinatra/base'
 require 'slack-ruby-client'
+require 'dotenv'
+
+Dotenv.load('.env')
 
 # load Slack app info into hash called `config` from env vars assigned during setup
 SLACK_CONFIG = {
@@ -38,7 +45,7 @@ end
 # OAuth is performed by exchanging set of keys and tokens between Slack's servers and yours
 # Process allows authoring user to confirm they want to grant bot access to team
 # See https://api.slack.com/docs/oauth for more information.
-class Auth < Sinatra::base
+class Auth < Sinatra::Base
     # HTML markup for "Add to Slack" button
     # note we pass app-specific config params in!
     add_to_slack_button = %(
